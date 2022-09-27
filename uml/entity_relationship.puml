@@ -1,0 +1,40 @@
+@startuml
+
+class Customer {
+  id : number
+  --
+  first_name : String
+  last_name : String
+  middle_initial : String
+  street : String
+  city : String
+  state : String
+  zip : String
+  phone : integer
+  email : String
+}
+
+class Account {
+	id : integer
+	--
+	description : String
+	balance : String
+	credit_line : Real
+	begin_balance : Real
+	begin_balance_timestamp : DatabaseDate
+	type : int
+}
+
+class Movement {
+	id: integer
+	--
+	timestamp : Real
+	amount : Real
+	balance : Real
+	description : String
+}
+
+Customer "n" <--> "n" Account
+Account "1" --> "n" Movement
+
+@enduml
