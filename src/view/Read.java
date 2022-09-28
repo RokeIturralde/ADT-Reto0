@@ -1,47 +1,70 @@
 package view;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
 
 public class Read {
 
-    private static Scanner in = new Scanner(System.in);
+    private static Scanner in = 
+        new Scanner(System.in);
 
     public static String string() {
-        String userInput = null;
+        String s;
         try {
-            userInput = in.next();
+            s = in.nextLine();
         } catch (Exception e) {
-            System.out.println("Please, try again.");
+            print("Please, try again.");
             return string();
         }
-        return userInput;
+        return s;
     }   
 
     public static int integer() {
-        int num = 0;
+        int i = 0;
         try {
-            num = Integer.parseInt(string());
-        } catch (Exception e) {
-            System.out.println("Please, input a numerical value: ");
+            i = Integer.parseInt(string());
+        } catch (NumberFormatException  nfe) {
+            print("Please, input an integer:");
             return integer();
         }
-        return num;
+        return i;
     }
 
-    public static double aDouble() {
-        double num = 0;
+    public static double real() {
+        double d = 0;
         try {
-            num = Double.parseDouble(string());
+            d = Double.parseDouble(string());
         } catch (Exception e) {
-            System.out.println("Please, input a numerical value: ");
-            return aDouble();
+            print("Please, input a rational:");
+            return real();
         }
-        return num;
+        return d;
     }
 
     public static LocalDate date() {
-        // TODO: implement method to read date through console.
+        String s = null,
+        format = "d/MM/yyyy";
+        LocalDate d = null;
+    
+        print("(Use format " + format + ")");
+            s = string();
+        try {
+            d = LocalDate
+                .parse(
+                s,
+                DateTimeFormatter
+                    .ofPattern(format));
+        } catch (DateTimeParseException dtpe) {
+            print("Please, try again.");
+            return date();
+        }  
         return null;
+    }
+
+    private static void print(String s) {
+        System.out.println(s);
     }
 }

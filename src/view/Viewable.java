@@ -1,9 +1,13 @@
 package view;
 
-import obj.Customer;
+import obj.*;
 
 public interface Viewable {
+
     public Customer inputCustomer();
 
+    public Account createAccount();
+    
+    public Movement createMovement();
     
 }

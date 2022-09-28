@@ -57,4 +57,15 @@ public class Movement {
     public void setDescription(String pDescription) {
         description = pDescription;
     }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return 
+            "ID: " + ID + "\n" +
+            "Timestamp: " + timestamp + "\n" +
+            "Amount: " + amount + "\n" +
+            "Balance: " + balance  + "\n" +
+            "Description: " + description + "\n";
+    }
 }

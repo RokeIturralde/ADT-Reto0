@@ -4,8 +4,11 @@ import java.time.LocalDate;
 
 import obj.Account;
 import obj.Customer;
+import obj.Movement;
 
-public class ViewImplementation {
+public class ViewImplementation /*implements Viewable */{
+    
+    //@Override
     public static Customer inputCustomer() {
         int pID, pZip, pPhone;
         String pFirstName, pLastName, pMiddleInitial, 
@@ -37,6 +40,7 @@ public class ViewImplementation {
             pStreet, pCity, pState, pZip, pPhone, pEmail);
     }
 
+    //@Override
     public static Account createAccount() {
         int pID, pType;
         String pDescription;
@@ -48,18 +52,47 @@ public class ViewImplementation {
         System.out.println("Input its description:");
             pDescription = Read.string();
         System.out.println("Input its balance:");
-            pBalance = Read.aDouble();
+            pBalance = Read.real();
         System.out.println("Input its credit line:");
-            pCreditLine = Read.aDouble();
+            pCreditLine = Read.real();
         System.out.println("Input its begin balance:");
-            pBeginBalance = Read.aDouble();
+            pBeginBalance = Read.real();
         System.out.println("Input its begin balance's timestamp:");
             pBeginBalanceTimestamp = Read.date();
         System.out.println("Select the account type:");
             pType = Read.integer();
+
         return 
             new Account(pID, pDescription, pBalance, pCreditLine,
             pBeginBalance, pBeginBalanceTimestamp, pType);
     }
-    
+
+    //@Override
+    public static Movement createMovement() {
+        int pID;
+        LocalDate pTimestamp;
+        double pAmount, pBalance;
+        String pDescription;
+
+        System.out.println("Input the movements ID:");
+            pID = Read.integer();
+
+        System.out.println("Input its date:");
+            pTimestamp = Read.date();
+        System.out.println("Input the amount");
+            pAmount = Read.real();
+        System.out.println("Input the balance:");
+            pBalance = Read.real();
+        System.out.println("Input the description:");
+            pDescription = Read.string();
+        
+        return 
+            new Movement(pID, pTimestamp, 
+            pAmount, pBalance, pDescription);
+    }
+
+    public static void main(String[] args) {
+        Movement m = createMovement();
+        System.out.println(m);
+    }
 }

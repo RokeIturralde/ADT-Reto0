@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import obj.*;
 
 public interface Modelable {
