@@ -9,6 +9,20 @@ public class Movement {
     private double amount;
     private double balance;
     private String description;
+    
+    public Movement(Integer pID) {
+    ID = pID;
+    }
+
+    public Movement(
+            Integer pID, LocalDate pTimestamp,
+            double pAmount, double pBalance, String pDescription) {
+        ID = pID;
+        timestamp = pTimestamp;
+        amount = pAmount;
+        balance = pBalance;
+        description = pDescription;
+    }
 
     public LocalDate getTimestamp() {
         return timestamp;
@@ -50,17 +64,15 @@ public class Movement {
         this.ID = ID;
     }
 
-    public Movement(Integer pID) {
-        ID = pID;
-    }
 
-    public Movement(
-            Integer pID, LocalDate pTimestamp,
-            double pAmount, double pBalance, String pDescription) {
-        ID = pID;
-        timestamp = pTimestamp;
-        amount = pAmount;
-        balance = pBalance;
-        description = pDescription;
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return 
+            "ID: " + ID + "\n" +
+            "Timestamp: " + timestamp + "\n" +
+            "Amount: " + amount + "\n" +
+            "Balance: " + balance  + "\n" +
+            "Description: " + description + "\n";
     }
 }
