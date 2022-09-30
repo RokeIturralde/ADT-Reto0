@@ -147,7 +147,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             stmt.setDouble(2, pMovement.getAmount());
             stmt.setDouble(3, pMovement.getBalance());
             stmt.setString(4, pMovement.getDescription());
-            stmt.setDate(5, (pMovement.getTimestamp()));
+            stmt.setObject(5, (pMovement.getTimestamp()));
             stmt.setInt(6, pAccount.getID());
 
             stmt.executeUpdate();

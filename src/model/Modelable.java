@@ -28,7 +28,7 @@ public interface Modelable {
     /**
      * Maybe it's unnecesary, idk.
      */
-    public Account checkDataAccount(String accountId);
+    public Account checkDataAccount(Integer pID);
 
     /**
      * Input a movement and it will be stored in the database. YOU HAVE TO CHECK

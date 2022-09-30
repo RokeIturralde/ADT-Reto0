@@ -1,0 +1,155 @@
+package controller;
+
+import model.*;
+import model.dao.*;
+import view.*;
+import obj.*;
+
+public class Controller {
+
+    private Modelable model = 
+        new ModelImplementation();
+    private Viewable view = 
+        new ViewImplementation();
+
+    private Customer c = null;
+    private Account a = null;
+    private Movement m = null;
+
+    private String greet = 
+        "Welcome to the bank data management application!";
+    private String options = 
+        "What would you like to do?\n\n" +
+        "1. Create a customer.\n" +
+        "2. View the data of a customer.\n" +
+        "3. View the accounts of a customer.\n" +
+        " -----------------------------------\n"+
+        "4. Create a new customer's account.\n" +
+        "5. Add a client to an account.\n" +
+        "6. View the data of an account\n" +
+        " -----------------------------------\n"+
+        "7. Make movements in an acount.\n" +
+        "8. View movements from an account.\n";
+
+    public void run() {
+        print(greet);
+        print(options + "\n");
+        int n = Read.integer(1, 8);
+        reset();
+    }
+
+    /**Asks for data and creates a new Customer,
+     * later storing it. If already created, gives
+     * a message.
+    */
+    public void createACustomer() {
+        c = view.createCustomer();
+        if (c.equals(
+            model.checkDataCustomer(c.getID())))
+            print("The customer already exists in the database.");
+        else {
+            model.createCustomer(c);
+            print("The customer has succesfully been stored in the DB.");
+        }
+    }
+    /**Shows the data of a Customer after
+     * asking it's ID.
+     */
+    public void viewDataOfCustomer() {
+        print("Please, select the ID of the customer you wish to see: ");
+        c = 
+            model.checkDataCustomer(
+                Read.integer());
+
+        if (c.equals(null))
+            print("There's no customer with that ID in the database.");
+        else
+            print("The customer has the following data:\n\n" + c.toString());
+    }
+    /**Shows all the accounts* of a Customer.
+     * If there are none, message.
+     */
+    public void viewAccountsOfCustomer() {
+        print("What's the ID of the customer whoose accounts you wish seeing?");
+            c = 
+                model.checkDataCustomer(
+                    Read.integer());
+
+        if (c.equals(null))
+            print("There's no customer with that ID.");
+        else {
+            print("This is the customer:\n" + c.toString());
+                model.checkAccount(c);
+            // TODO: it's suposed to be an array.
+            if (c.getCuentas().isEmpty())
+                print("There are no accounts associated with the customer.");
+            else
+                for (Account p : c.getCuentas())
+                    print(p);
+        }
+    }
+    /**Create new account for a customer.
+    */
+    public void createAccountToCustomer() {
+        print("Please input the ID of the customer: ");
+            c = model.checkDataCustomer(
+                Read.integer());
+        if (c.equals(null))
+            print("There are no customer with this ID.");
+        else {
+            print("Please enter the data of the account you wish to create.");
+                a = view.createAccount();
+            print(
+                "The account will be associated with the following customer:\n\n" + 
+                c.toString() + "\n\n Are you sure? [Y/n]");
+            //if (Read.string().equals("") || Read.string().equalsIgnoreCase("y"))
+                // TODO: store in all the places.
+        }
+    }
+    /**
+     */
+    public void addClientToAnAccount() {
+        print("Enter the ID of the customer:\n");
+            c = model.checkDataCustomer(Read.integer());
+        if (c.equals(null))
+            print("There are no customers with that ID.");
+        else
+            print("Which account do you want to add to this customer? (enter the ID)\n");
+                a = model.checkDataAccount(Read.integer());
+            if (a.equals(null))
+                print("There are no accounts with that ID.");
+            else {
+                print(
+                "Data of the Customer:\n" + c.toString() + "\n\n" +
+                "Data of the Account:\n" + a.toString() + "\n\n" +
+                "Are you sure about linking them? [Y/n]");
+                    String s = Read.string();
+                /*
+                if (s.equals("") 
+                || s.toUpperCase().charAt(0) == 'y')
+                    // TODO: do the stuff
+                */
+            }
+    }
+    /**Prints at the screen data from an account
+     * after asking its ID.
+     */
+    public void viewDataOfAccount() {
+        print("Input the ID of the account:\n");
+            a = model.checkDataAccount(Read.integer());
+        if (a.equals(null))
+            print("There are no accounts with this ID.");
+        else
+            print(a.toString());
+    }
+
+    public void print(Object obj) {
+        System.out.println(obj);
+    }
+
+    private void reset() {
+        c = null;
+        a = null;
+        m = null;
+    }
+}

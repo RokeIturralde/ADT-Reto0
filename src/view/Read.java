@@ -32,6 +32,15 @@ public class Read {
         }
         return i;
     }
+    /**@param a low range, included,
+     * @param b low range, included.
+     */
+    public static int integer(int a, int b) {
+        int i = integer();
+        if (!(a <= i && i <= b))
+            return integer(a, b);
+        return i;
+    }
 
     public static double real() {
         double d = 0;
@@ -45,8 +54,9 @@ public class Read {
     }
 
     public static LocalDate date() {
-        String s = null,
-        format = "d/MM/yyyy";
+        String 
+            s = null,
+            format = "d/MM/yyyy";
         LocalDate d = null;
     
         print("(Use format " + format + ")");
@@ -54,14 +64,14 @@ public class Read {
         try {
             d = LocalDate
                 .parse(
-                s,
-                DateTimeFormatter
-                    .ofPattern(format));
+                    s,
+                    DateTimeFormatter
+                        .ofPattern(format));
         } catch (DateTimeParseException dtpe) {
             print("Please, try again.");
             return date();
         }  
-        return null;
+        return d;
     }
 
     private static void print(String s) {

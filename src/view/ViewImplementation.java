@@ -6,10 +6,10 @@ import obj.Account;
 import obj.Customer;
 import obj.Movement;
 
-public class ViewImplementation /*implements Viewable */{
+public class ViewImplementation implements Viewable {
     
-    //@Override
-    public static Customer inputCustomer() {
+    @Override
+    public Customer createCustomer() {
         int pID, pZip, pPhone;
         String pFirstName, pLastName, pMiddleInitial, 
         pStreet, pCity, pState, pEmail;
@@ -40,8 +40,8 @@ public class ViewImplementation /*implements Viewable */{
             pStreet, pCity, pState, pZip, pPhone, pEmail);
     }
 
-    //@Override
-    public static Account createAccount() {
+    @Override
+    public Account createAccount() {
         int pID, pType;
         String pDescription;
         Double pBalance, pCreditLine, pBeginBalance;
@@ -67,8 +67,8 @@ public class ViewImplementation /*implements Viewable */{
             pBeginBalance, pBeginBalanceTimestamp, pType);
     }
 
-    //@Override
-    public static Movement createMovement() {
+    @Override
+    public Movement createMovement() {
         int pID;
         LocalDate pTimestamp;
         double pAmount, pBalance;
@@ -89,10 +89,5 @@ public class ViewImplementation /*implements Viewable */{
         return 
             new Movement(pID, pTimestamp, 
             pAmount, pBalance, pDescription);
-    }
-
-    public static void main(String[] args) {
-        Movement m = createMovement();
-        System.out.println(m);
     }
 }
