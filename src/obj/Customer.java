@@ -14,6 +14,7 @@ public class Customer {
     private Integer zip;
     private Integer phone;
     private String email;
+    private ArrayList<Account> cuentas;
 
     public ArrayList<Account> getCuentas() {
         return cuentas;
@@ -22,7 +23,6 @@ public class Customer {
     public void setCuentas(ArrayList<Account> cuentas) {
         this.cuentas = cuentas;
     }
-    private ArrayList<Account> cuentas;
 
     public Customer(Integer ppI) {
         ID = ppI;
@@ -48,38 +48,48 @@ public class Customer {
     public Integer getID() {
         return ID;
     }
+
     public String getFirstName() {
         return firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
+
     public String getMiddleInitial() {
         return middleInitial;
     }
+
     public String getStreet() {
         return street;
     }
+
     public String getCity() {
         return city;
     }
+
     public String getState() {
         return state;
     }
+
     public Integer getZip() {
         return zip;
     }
+
     public Integer getPhone() {
         return phone;
     }
+
     public String getEmail() {
         return email;
     }
 
     // Setters.
-    public void setID(Integer pID) {
-        ID = pID;
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

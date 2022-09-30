@@ -1,8 +1,10 @@
 package obj;
 
-public class AccountType {
-    public static enum Account {
-        STANDARD,
-        CREDIT   
-    }
+import java.io.Serializable;
+
+public enum AccountType implements Serializable {
+
+    STANDARD,
+    CREDIT
+
 }
