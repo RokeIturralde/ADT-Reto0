@@ -70,7 +70,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
     }
 
     @Override
-    public Account checkAccount(Customer pCustomer) {
+    public void checkAccount(Customer pCustomer) {
         ResultSet rs;
         Account account = null;
         AccountType accountType = null;
@@ -95,23 +95,21 @@ public class ModelImplementation extends SQLAccess implements Modelable {
                         rs.getDouble("a.beginBalance"),
                         rs.getDate("a.beginBalanceTimestamp").toLocalDate(),
                         type);
-                pCustomer.getCuentas().add(account);
+                pCustomer.getAccounts().add(account);
             }
 
         } catch (SQLException e) {
         }
-        return account;
     }
 
-    @Override
-    public Account checkDataAccount(String accountId) {
+    public Account checkDataAccount(Account accountCheck) {
         Account account = null;
         ResultSet rs;
         String dataAccount = "select * from account where id=?";
         try {
             openConnection();
             stmt = con.prepareStatement(dataAccount);
-            stmt.setString(1, accountId);
+            stmt.setString(1, accountCheck.getID().toString());
             rs = stmt.executeQuery();
             if (rs.next()) {
                 AccountType type = null;
@@ -133,6 +131,37 @@ public class ModelImplementation extends SQLAccess implements Modelable {
         } catch (SQLException e) {
         }
         return account;
+    }
+
+    public void addCustomerToAccount(Customer customer, Account account) {
+        String addCustomerAccount = "insert into customer_account values (?,?);";
+        try {
+            openConnection();
+            stmt = con.prepareStatement(addCustomerAccount);
+            stmt.setInt(1, customer.getID());
+            stmt.setInt(2, account.getID());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+        }
+        customer.getAccounts().add(account);
+    }
+
+    public void createCustomersAccount(Customer customer, Account account) {
+        String addAccount = "insert into account values(?,?,?,?,?,?,?);";
+        try {
+            openConnection();
+            stmt = con.prepareStatement(addAccount);
+            stmt.setInt(1, account.getID());
+            stmt.setDouble(2, account.getBalance());
+            stmt.setDouble(3, account.getBeginBalance());
+            stmt.setDate(4, (account.getBeginBalanceTimestamp()));
+            stmt.setDouble(5, account.getCreditLine());
+            stmt.setString(6, account.getDescription());
+            stmt.setInt(7, account.getType().ordinal());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+        }
+        customer.getAccounts().add(account);
     }
 
     @Override
@@ -179,17 +208,13 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             while (rs.next()) {
                 move = new Movement(rs.getInt("m.id"), rs.getDate("m.timestamp").toLocalDate(),
                         rs.getDouble("m.amount"), rs.getDouble("m.balance"), rs.getString("m.description"));
-                //pAccount.getMovements().add(move);
+                pAccount.getMovements().add(move);
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(ModelImplementation.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConnection();
-        }
-
-        for (int i = 0; i < pAccount.getMovements().size(); i++) {
-            pAccount.getMovements().get(i);
         }
     }
 

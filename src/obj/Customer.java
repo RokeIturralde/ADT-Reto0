@@ -1,8 +1,9 @@
 package obj;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Customer {
+public class Customer implements Serializable {
 
     private Integer ID;
     private String firstName;
@@ -14,14 +15,14 @@ public class Customer {
     private Integer zip;
     private Integer phone;
     private String email;
-    private ArrayList<Account> cuentas;
+    private ArrayList<Account> accounts;
 
-    public ArrayList<Account> getCuentas() {
-        return cuentas;
+    public ArrayList<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setCuentas(ArrayList<Account> cuentas) {
-        this.cuentas = cuentas;
+    public void setCuentas(ArrayList<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public Customer(Integer ppI) {

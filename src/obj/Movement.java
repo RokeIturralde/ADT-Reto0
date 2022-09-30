@@ -1,17 +1,18 @@
 package obj;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Movement {
+public class Movement implements Serializable {
 
     private Integer ID;
     private LocalDate timestamp;
     private double amount;
     private double balance;
     private String description;
-    
+
     public Movement(Integer pID) {
-    ID = pID;
+        ID = pID;
     }
 
     public Movement(
@@ -64,15 +65,13 @@ public class Movement {
         this.ID = ID;
     }
 
-
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return 
-            "ID: " + ID + "\n" +
-            "Timestamp: " + timestamp + "\n" +
-            "Amount: " + amount + "\n" +
-            "Balance: " + balance  + "\n" +
-            "Description: " + description + "\n";
+        return "ID: " + ID + "\n"
+                + "Timestamp: " + timestamp + "\n"
+                + "Amount: " + amount + "\n"
+                + "Balance: " + balance + "\n"
+                + "Description: " + description + "\n";
     }
 }

@@ -1,27 +1,28 @@
 package obj;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.management.ObjectName;
 
-public class Account {
+public class Account implements Serializable {
 
-    private final Integer ID;
+    private Integer ID;
     private String description;
     private Double balance;
     private Double creditLine;
     private Double beginBalance;
     private LocalDate beginBalanceTimestamp;
     private AccountType type;
-    private ArrayList<Movement> Movements;
+    private ArrayList<Movement> movements;
 
     public ArrayList<Movement> getMovements() {
-        return Movements;
+        return movements;
     }
 
-    public void setMovements(ArrayList<Movement> Movements) {
-        this.Movements = Movements;
+    public void setMovements(ArrayList<Movement> movements) {
+        this.movements = movements;
     }
 
     public Account(Integer pID) {
@@ -40,15 +41,17 @@ public class Account {
     }
 
     public Account(
-    Integer pID, String pDescription, Double pBalance, Double pCreditLine, 
-    Double pBeginBalance, LocalDate pBeginBalanceTimestamp, Integer pType) {
-        if (pType == 0)
-            // TODO: select the type from integer.
+            Integer pID, String pDescription, Double pBalance, Double pCreditLine,
+            Double pBeginBalance, LocalDate pBeginBalanceTimestamp, Integer pType) {
+        if (pType == 0) // TODO: select the type from integer.
+        {
             new Object();
-        else 
-            // do the other stuffs
+        } else // do the other stuffs
+        {
             new Object();
+        }
     }
+
     // Getters.
     public Integer getID() {
         return ID;
@@ -101,5 +104,9 @@ public class Account {
 
     public void setType(AccountType pType) {
         type = pType;
+    }
+
+    public void addMovement(Movement movement) {
+        movements.add(movement);
     }
 }
