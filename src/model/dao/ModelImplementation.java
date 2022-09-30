@@ -104,14 +104,14 @@ public class ModelImplementation extends SQLAccess implements Modelable {
     }
 
     @Override
-    public Account checkDataAccount(String accountId) {
+    public Account checkDataAccount(Integer pID) {
         Account account = null;
         ResultSet rs;
         String dataAccount = "select * from account where id=?";
         try {
             openConnection();
             stmt = con.prepareStatement(dataAccount);
-            stmt.setString(1, accountId);
+            stmt.setString(1, ""+pID);
             rs = stmt.executeQuery();
             if (rs.next()) {
                 AccountType type = null;
@@ -191,5 +191,6 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             pAccount.getMovements().get(i);
         }
     }
+
 
 }

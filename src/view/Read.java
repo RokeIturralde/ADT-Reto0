@@ -36,9 +36,16 @@ public class Read {
      * @param b low range, included.
      */
     public static int integer(int a, int b) {
+        if (b < a) {
+            b += a;
+            a = b - a;
+            b -= a;
+        }
         int i = integer();
-        if (!(a <= i && i <= b))
+        if (!(a <= i && i <= b)) {
+            print("Please, use a value between " + a + " and " + b + ".");
             return integer(a, b);
+        }
         return i;
     }
 

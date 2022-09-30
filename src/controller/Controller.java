@@ -1,9 +1,9 @@
 package controller;
 
+import obj.*;
+import view.*;
 import model.*;
 import model.dao.*;
-import view.*;
-import obj.*;
 
 public class Controller {
 
@@ -12,8 +12,8 @@ public class Controller {
     private Viewable view = 
         new ViewImplementation();
 
-    private Customer c = null;
     private Account a = null;
+    private Customer c = null;
     private Movement m = null;
 
     private String greet = 
@@ -32,6 +32,7 @@ public class Controller {
         "8. View movements from an account.\n";
 
     public void run() {
+        clear();
         print(greet);
         print(options + "\n");
         int n = Read.integer(1, 8);
@@ -70,7 +71,7 @@ public class Controller {
      * If there are none, message.
      */
     public void viewAccountsOfCustomer() {
-        print("What's the ID of the customer whoose accounts you wish seeing?");
+        print("What's the ID of the customer whoose accounts you wish to see?");
             c = 
                 model.checkDataCustomer(
                     Read.integer());
@@ -142,14 +143,58 @@ public class Controller {
         else
             print(a.toString());
     }
-
-    public void print(Object obj) {
+    /**Creates a new movement that will be associated
+     * with an account.
+     */
+    public void makeMovementInAccount() {
+        print("Input the ID of the account:");
+            a = model.checkDataAccount(Read.integer());
+        if (a.equals(null))
+            print("There are no accounts with this ID.");
+        else {
+            print("Please input the data of the movement:");
+                m = view.createMovement();
+            model.addMovement(m, a);
+        }
+    }
+    /**Given the ID of an account, shows all the movements
+     * associated to it.
+     */
+    public void viewMovementFromAccount() {
+        print("Please input the ID of the account:");
+            a = model.checkDataAccount(Read.integer());
+        if (a.equals(null))
+            print("There are no accounts with this ID. Try again.");
+        else {
+            print(
+            "An account has been found:\n" + a.toString() + "\n" +
+            "Searching for movements...\n");
+            if (a.getMovements().isEmpty())
+                print("There are no movements related to this account.");
+            else 
+                for (Movement p : a.getMovements()) 
+                    print(p.toString() + "\n");
+        }
+    }
+    /**Stoopid function to male prettier the prints.
+     * That's all it does really, nothing more.
+     * @param obj to be printed, with a new line.
+    */
+    private void print(Object obj) {
         System.out.println(obj);
     }
-
+    /**Auxiliar method to set the values of the attributes
+     * to null, just in case to avoid errors. This way it's
+     * not necessary to define them in the methods. Simpler.
+     */
     private void reset() {
         c = null;
         a = null;
         m = null;
+    }
+
+    private void clear() {
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();  
     }
 }
