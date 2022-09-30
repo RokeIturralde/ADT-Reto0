@@ -11,7 +11,6 @@ import obj.*;
 public class ModelImplementation extends SQLAccess implements Modelable {
 
     private PreparedStatement stmt;
-    private Movement move;
 
     final String addMovement = "INSERT INTO MOVEMENT VALUES (?,?,?,?,?,?)";
     final String checkMovement = "SELECT M.* FROM MOVEMENT M,ACCOUNT A WHERE A.ID=? AND M.ACCOUNT_ID=A.ID";
@@ -71,7 +70,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
     }
 
     @Override
-    public void checkAccount(Customer pCustomer) {
+    public Account checkAccount(Customer pCustomer) {
         ResultSet rs;
         Account account = null;
         AccountType accountType = null;
@@ -101,6 +100,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
 
         } catch (SQLException e) {
         }
+        return account;
     }
 
     @Override
@@ -149,8 +149,9 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             stmt.setString(4, pMovement.getDescription());
             stmt.setDate(5, (pMovement.getTimestamp()));
             stmt.setInt(6, pAccount.getID());
-
             stmt.executeUpdate();
+            // Add the movement to the account array
+            pAccount.getMovements().add(pMovement);
 
         } catch (SQLException ex) {
             Logger.getLogger(ModelImplementation.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,10 +164,12 @@ public class ModelImplementation extends SQLAccess implements Modelable {
 
     @Override
     public void checkMovement(Account pAccount) {
-
+        Movement move = null;
         //Open connection
+
         openConnection();
         ResultSet rs;
+
         try {
             stmt = con.prepareStatement(checkMovement);
             stmt.setInt(1, pAccount.getID());
@@ -176,9 +179,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             while (rs.next()) {
                 move = new Movement(rs.getInt("m.id"), rs.getDate("m.timestamp").toLocalDate(),
                         rs.getDouble("m.amount"), rs.getDouble("m.balance"), rs.getString("m.description"));
-
-                pAccount.getMovements().add(move);
-
+                //pAccount.getMovements().add(move);
             }
 
         } catch (SQLException ex) {
