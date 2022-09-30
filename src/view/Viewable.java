@@ -4,7 +4,7 @@ import obj.*;
 
 public interface Viewable {
 
-    public Customer inputCustomer();
+    public Customer createCustomer();
 
     public Account createAccount();
     

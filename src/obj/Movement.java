@@ -67,7 +67,6 @@ public class Movement {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return 
             "ID: " + ID + "\n" +
             "Timestamp: " + timestamp + "\n" +

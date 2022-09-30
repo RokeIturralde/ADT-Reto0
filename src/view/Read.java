@@ -32,6 +32,16 @@ public class Read {
         }
         return i;
     }
+    /**@param a range down, included
+     * @param b range up, included.
+     */
+    public static int integer(int a, int b) {
+        int ans = integer();
+        if (!(a <= ans && ans <= b)) 
+            return integer(a, b);
+        return ans;
+            
+    }
 
     public static double real() {
         double d = 0;

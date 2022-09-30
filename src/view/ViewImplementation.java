@@ -6,33 +6,33 @@ import obj.Account;
 import obj.Customer;
 import obj.Movement;
 
-public class ViewImplementation /*implements Viewable */{
+public class ViewImplementation implements Viewable {
     
-    //@Override
-    public static Customer inputCustomer() {
+    @Override
+    public Customer createCustomer() {
         int pID, pZip, pPhone;
         String pFirstName, pLastName, pMiddleInitial, 
         pStreet, pCity, pState, pEmail;
 
-        System.out.println("Input the customers ID:");
+        print("Input the customers ID:");
             pID = Read.integer();
-        System.out.println("Input their first name:");
+        print("Input their first name:");
             pFirstName = Read.string();
-        System.out.println("Input their last name:" );
+        print("Input their last name:" );
             pLastName = Read.string();
-        System.out.println("Input their middle initial: ");
+        print("Input their middle initial: ");
             pMiddleInitial = Read.string().charAt(0) + "";
-        System.out.println("Input their street: ");
+        print("Input their street: ");
             pStreet = Read.string();
-        System.out.println("Input their city: ");
+        print("Input their city: ");
             pCity = Read.string();
-        System.out.println("Input the state: ");
+        print("Input the state: ");
             pState = Read.string();
-        System.out.println("Input the ZIP: ");
+        print("Input the ZIP: ");
             pZip = Read.integer();
-        System.out.println("Input their phone number: ");
+        print("Input their phone number: ");
             pPhone = Read.integer();
-        System.out.println("Input their email: ");
+        print("Input their email: ");
             pEmail = Read.string();
 
         return 
@@ -40,26 +40,26 @@ public class ViewImplementation /*implements Viewable */{
             pStreet, pCity, pState, pZip, pPhone, pEmail);
     }
 
-    //@Override
-    public static Account createAccount() {
+    @Override
+    public Account createAccount() {
         int pID, pType;
         String pDescription;
         Double pBalance, pCreditLine, pBeginBalance;
         LocalDate pBeginBalanceTimestamp;
 
-        System.out.println("Input the Account's ID:");
+        print("Input the Account's ID:");
             pID = Read.integer();
-        System.out.println("Input its description:");
+        print("Input its description:");
             pDescription = Read.string();
-        System.out.println("Input its balance:");
+        print("Input its balance:");
             pBalance = Read.real();
-        System.out.println("Input its credit line:");
+        print("Input its credit line:");
             pCreditLine = Read.real();
-        System.out.println("Input its begin balance:");
+        print("Input its begin balance:");
             pBeginBalance = Read.real();
-        System.out.println("Input its begin balance's timestamp:");
+        print("Input its begin balance's timestamp:");
             pBeginBalanceTimestamp = Read.date();
-        System.out.println("Select the account type:");
+        print("Select the account type:");
             pType = Read.integer();
 
         return 
@@ -67,23 +67,23 @@ public class ViewImplementation /*implements Viewable */{
             pBeginBalance, pBeginBalanceTimestamp, pType);
     }
 
-    //@Override
-    public static Movement createMovement() {
+    @Override
+    public Movement createMovement() {
         int pID;
         LocalDate pTimestamp;
         double pAmount, pBalance;
         String pDescription;
 
-        System.out.println("Input the movements ID:");
+        print("Input the movements ID:");
             pID = Read.integer();
 
-        System.out.println("Input its date:");
+        print("Input its date:");
             pTimestamp = Read.date();
-        System.out.println("Input the amount");
+        print("Input the amount");
             pAmount = Read.real();
-        System.out.println("Input the balance:");
+        print("Input the balance:");
             pBalance = Read.real();
-        System.out.println("Input the description:");
+        print("Input the description:");
             pDescription = Read.string();
         
         return 
@@ -91,8 +91,7 @@ public class ViewImplementation /*implements Viewable */{
             pAmount, pBalance, pDescription);
     }
 
-    public static void main(String[] args) {
-        Movement m = createMovement();
-        System.out.println(m);
+    private static void print(Object obj) {
+        System.out.println(obj);
     }
 }

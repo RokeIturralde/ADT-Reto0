@@ -1,6 +1,7 @@
 package model.dao;
 
 import java.sql.ResultSet;
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -147,7 +148,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             stmt.setDouble(2, pMovement.getAmount());
             stmt.setDouble(3, pMovement.getBalance());
             stmt.setString(4, pMovement.getDescription());
-            stmt.setDate(5, (pMovement.getTimestamp()));
+            stmt.setObject(5, pMovement.getTimestamp());
             stmt.setInt(6, pAccount.getID());
             stmt.executeUpdate();
             // Add the movement to the account array
@@ -191,6 +192,36 @@ public class ModelImplementation extends SQLAccess implements Modelable {
         for (int i = 0; i < pAccount.getMovements().size(); i++) {
             pAccount.getMovements().get(i);
         }
+    }
+
+    @Override
+    public void createFileCustomer(Customer pCustomer, File fichCustomer) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void checkFileAccount(Customer pCustomer) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Account checkFileDataAccount(String accountId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void addFileMovement(Movement pMovement, Account pAccount) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void checkFileMovement(Account pAccount) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
