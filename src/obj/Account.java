@@ -3,6 +3,8 @@ package obj;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.management.ObjectName;
+
 public class Account {
 
     private final Integer ID;
@@ -37,6 +39,16 @@ public class Account {
         type = pType;
     }
 
+    public Account(
+    Integer pID, String pDescription, Double pBalance, Double pCreditLine, 
+    Double pBeginBalance, LocalDate pBeginBalanceTimestamp, Integer pType) {
+        if (pType == 0)
+            // TODO: select the type from integer.
+            new Object();
+        else 
+            // do the other stuffs
+            new Object();
+    }
     // Getters.
     public Integer getID() {
         return ID;
