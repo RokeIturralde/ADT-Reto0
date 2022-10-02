@@ -38,7 +38,7 @@ public class Controller {
     public void viewDataOfCustomer() {
         print("Please, input the ID of the customer you wish to see: ");
         c = model.checkDataCustomer(
-                Read.integer());
+                Read.integer() + "");
 
         if (c.equals(null))
             print("There's no customer with that ID in the database.");
@@ -51,7 +51,7 @@ public class Controller {
     public void viewAccountsOfCustomer() {
         print("Please, input the ID of the customer you wish to see: ");
             c = model.checkDataCustomer(
-                Read.integer());
+                Read.integer() + "");
 
         if (c.equals(null))
             print("There's no customer with that ID.");
@@ -73,7 +73,7 @@ public class Controller {
     public void createAccountToCustomer() {
         print("Please input the ID of the customer whose account you want to create: ");
             c = model.checkDataCustomer(
-                Read.integer());
+                Read.integer() + "");
         if (c.equals(null))
             print("There are no customer with this ID.");
         else {
@@ -93,12 +93,12 @@ public class Controller {
      */
     public void addClientToAnAccount() {
         print("Enter the ID of the customer:\n");
-            c = model.checkDataCustomer(Read.integer());
+            c = model.checkDataCustomer(Read.integer() + "");
         if (c.equals(null))
             print("There are no customers with that ID.");
         else
             print("Which account do you want to add to this customer? (enter the ID)\n");
-                a = model.checkDataAccount(Read.integer());
+                a = model.checkDataAccount(Read.integer() + "");
             if (a.equals(null))
                 print("There are no accounts with that ID.");
             else {
@@ -119,8 +119,8 @@ public class Controller {
      */
     public void viewDataOfAccount() {
         print("Input the ID of the account: ");
-            a = model.checkDataAccount(Read.integer());
-        if (a.equals(null))
+            a = model.checkDataAccount(Read.integer() + "");
+        if (a == null || a.equals(null))
             print("There are no accounts with this ID.");
         else
             print(a.toString());
@@ -130,7 +130,7 @@ public class Controller {
      */
     public void makeMovementInAccount() {
         print("Input the ID of the account: ");
-            a = model.checkDataAccount(Read.integer());
+            a = model.checkDataAccount(Read.integer() + "");
         if (a.equals(null))
             print("There are no accounts with this ID.");
         else {
@@ -144,7 +144,7 @@ public class Controller {
      */
     public void viewMovementFromAccount() {
         print("Please input the ID of the account: ");
-            a = model.checkDataAccount(Read.integer());
+            a = model.checkDataAccount(Read.integer() + "");
         if (a.equals(null))
             print("There are no accounts with this ID. Try again.");
         else {
@@ -173,7 +173,7 @@ public class Controller {
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }
-     /**Stoopid function to male prettier the prints.
+     /**Stoopid function to make prettier the prints.
      * That's all it does really, nothing more.
      * @param obj to be printed, with a new line.
     */

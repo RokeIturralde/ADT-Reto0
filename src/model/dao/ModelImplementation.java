@@ -30,13 +30,13 @@ public class ModelImplementation extends SQLAccess implements Modelable {
         try {
             openConnection();
             stmt = con.prepareStatement(insertCustomer);
-            stmt.setInt(1, pCustomer.getID());
+            stmt.setInt(1, Integer.parseInt(pCustomer.getID()));
             stmt.setString(2, pCustomer.getCity());
             stmt.setString(3, pCustomer.getEmail());
             stmt.setString(4, pCustomer.getFirstName());
             stmt.setString(5, pCustomer.getLastName());
             stmt.setString(6, pCustomer.getMiddleInitial());
-            stmt.setInt(7, pCustomer.getPhone());
+            stmt.setInt(7, Integer.parseInt(pCustomer.getPhone()));
             stmt.setString(8, pCustomer.getState());
             stmt.setString(9, pCustomer.getStreet());
             stmt.setInt(10, pCustomer.getZip());
@@ -49,24 +49,27 @@ public class ModelImplementation extends SQLAccess implements Modelable {
     }
 
     @Override
-    public Customer checkDataCustomer(Integer pID) {
+    public Customer checkDataCustomer(String pID) {
         ResultSet rs = null;
         Customer pCustomer = null;
 
         try {
             openConnection();
             stmt = con.prepareStatement(checkDataCustomer);
-            stmt.setInt(1, pID);
+            stmt.setString(1, pID);
             rs = stmt.executeQuery();
             if (rs.next()) {
                 pCustomer = new Customer(pID);
-                pCustomer.setID(rs.getInt("id"));
+                pCustomer.setID(rs.getInt("id") + "");
                 pCustomer.setCity(rs.getString("city"));
                 pCustomer.setEmail(rs.getString("email"));
                 pCustomer.setFirstName(rs.getString("firstName"));
                 pCustomer.setLastName(rs.getString("lastName"));
                 pCustomer.setMiddleInitial(rs.getString("middleInitial"));
-                pCustomer.setPhone(rs.getInt("phone"));
+
+                Long l = rs.getLong("phone");
+
+                pCustomer.setPhone(l.toString());
                 pCustomer.setState(rs.getString("state"));
                 pCustomer.setStreet(rs.getString("street"));
                 pCustomer.setZip(rs.getInt("zip"));
@@ -92,14 +95,12 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             stmt.setString(1, pCustomer.getID().toString());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                AccountType type = null;
-
-                for (AccountType a : AccountType.values()) {
-                    if (a.ordinal() == rs.getInt("a.type")) {
-                        type = a;
-                    }
-                }
-                account = new Account(rs.getInt("a.id"),
+                AccountType type;
+                if (rs.getInt("a.type") == 0)
+                    type = AccountType.STANDARD;
+                else
+                    type = AccountType.CREDIT;
+                account = new Account(rs.getInt("a.id") + "",
                         rs.getString("a.description"),
                         rs.getDouble("a.balance"),
                         rs.getDouble("a.creditLine"),
@@ -120,7 +121,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
         try {
             openConnection();
             stmt = con.prepareStatement(addAccount);
-            stmt.setInt(1, a.getID());
+            stmt.setInt(1, Integer.parseInt(a.getID()));
             stmt.setDouble(2, a.getBalance());
             stmt.setDouble(3, a.getBeginBalance());
             stmt.setObject(4, a.getBeginBalanceTimestamp());
@@ -130,41 +131,34 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             stmt.executeUpdate();
 
             stmt = con.prepareStatement(addCustomerAccount);
-            stmt.setInt(1, customer.getID());
-            stmt.setInt(2, a.getID());
+            stmt.setString(1, customer.getID());
+            stmt.setString(2, a.getID());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("La cagaste");
+            
         } finally {
             closeConnection();
         }
     }
 
     @Override
-    public Account checkDataAccount(Integer accountId) {
+    public Account checkDataAccount(String accountId) {
         Account account = null;
         ResultSet rs;
 
         try {
             openConnection();
             stmt = con.prepareStatement(dataAccount);
-            stmt.setInt(1, accountId);
+            stmt.setString(1, accountId);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                AccountType type = null;
-
-                for (AccountType a : AccountType.values()) {
-                    if (a.ordinal() == rs.getInt("a.type")) {
-                        type = a;
-                    }
-                }
-                account = new Account(rs.getInt("id"),
+                account = new Account(rs.getInt("id") + "",
                         rs.getString("description"),
                         rs.getDouble("balance"),
                         rs.getDouble("creditLine"),
                         rs.getDouble("beginBalance"),
                         rs.getDate("beginBalanceTimestamp").toLocalDate(),
-                        type);
+                        rs.getInt("type") == 1 ? AccountType.STANDARD : AccountType.CREDIT);
             }
 
         } catch (SQLException e) {
@@ -205,12 +199,12 @@ public class ModelImplementation extends SQLAccess implements Modelable {
         try {
             //Tabla de Movements
             stmt = con.prepareStatement(addMovement);
-            stmt.setInt(1, pMovement.getID());
+            stmt.setString(1, pMovement.getID());
             stmt.setDouble(2, pMovement.getAmount());
             stmt.setDouble(3, pMovement.getBalance());
             stmt.setString(4, pMovement.getDescription());
             stmt.setObject(5, (pMovement.getTimestamp()));
-            stmt.setInt(6, pAccount.getID());
+            stmt.setString(6, pAccount.getID());
             stmt.executeUpdate();
             // Add the movement to the account array
             pAccount.getMovements().add(pMovement);
@@ -234,12 +228,12 @@ public class ModelImplementation extends SQLAccess implements Modelable {
 
         try {
             stmt = con.prepareStatement(checkMovement);
-            stmt.setInt(1, pAccount.getID());
+            stmt.setString(1, pAccount.getID());
 
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                move = new Movement(rs.getInt("m.id"), rs.getDate("m.timestamp").toLocalDate(),
+                move = new Movement(rs.getString("m.id"), rs.getDate("m.timestamp").toLocalDate(),
                         rs.getDouble("m.amount"), rs.getDouble("m.balance"), rs.getString("m.description"));
                 pAccount.getMovements().add(move);
             }

@@ -13,7 +13,7 @@ public interface Modelable {
      * Use an object to send the data and check if the Customer is or not stored
      * in the database.
      */
-    public Customer checkDataCustomer(Integer pID);
+    public Customer checkDataCustomer(String pID);
 
     /**
      * Use an object to send the data and checj if the Account is or not stored
@@ -34,7 +34,7 @@ public interface Modelable {
     * Creates an account and adds that account to the customer Array
      */
     
-    public Account checkDataAccount(Integer accountId);
+    public Account checkDataAccount(String accountId);
 
     /**
      * Input a movement and it will be stored in the database. YOU HAVE TO CHECK

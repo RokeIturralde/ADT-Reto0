@@ -5,18 +5,18 @@ import java.time.LocalDate;
 
 public class Movement implements Serializable {
 
-    private Integer ID;
+    private String ID;
     private LocalDate timestamp;
     private double amount;
     private double balance;
     private String description;
     
-    public Movement(Integer pID) {
+    public Movement(String pID) {
     ID = pID;
     }
 
     public Movement(
-            Integer pID, LocalDate pTimestamp,
+            String pID, LocalDate pTimestamp,
             double pAmount, double pBalance, String pDescription) {
         ID = pID;
         timestamp = pTimestamp;
@@ -57,11 +57,11 @@ public class Movement implements Serializable {
         this.description = description;
     }
 
-    public Integer getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(Integer ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 

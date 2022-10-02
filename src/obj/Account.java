@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Account implements Serializable{
 
-    private Integer ID;
+    private String ID;
     private String description;
     private Double balance;
     private Double creditLine;
@@ -24,12 +24,12 @@ public class Account implements Serializable{
         this.Movements = Movements;
     }
 
-    public Account(Integer pID) {
+    public Account(String pID) {
         ID = pID;
     }
 
     public Account(
-            Integer pID, String pDescription, Double pBalance, Double pCreditLine,
+            String pID, String pDescription, Double pBalance, Double pCreditLine,
             Double pBeginBalance, LocalDate pBeginBalanceTimestamp, AccountType pType) {
         ID = pID;
         balance = pBalance;
@@ -39,7 +39,7 @@ public class Account implements Serializable{
         type = pType;
     }
     // Getters.
-    public Integer getID() {
+    public String getID() {
         return ID;
     }
 

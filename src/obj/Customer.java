@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Customer implements Serializable {
 
-    private Integer ID;
+    private String ID;
     private String firstName;
     private String lastName;
     private String middleInitial;
@@ -13,18 +13,18 @@ public class Customer implements Serializable {
     private String city;
     private String state;
     private Integer zip;
-    private Integer phone;
+    private String phone;
     private String email;
     private ArrayList <Account> accounts = new ArrayList <Account> ();
 
-    public Customer(Integer ppI) {
-        ID = ppI;
+    public Customer(String pID) {
+        ID = pID;
     }
 
     public Customer(
-            Integer pID, String pFirstName, String pLastName,
+        String pID, String pFirstName, String pLastName,
             String pMiddleInitial, String pStreet, String pCity,
-            String pState, Integer pZip, Integer pPhone, String pEmail) {
+            String pState, Integer pZip, String pPhone, String pEmail) {
         ID = pID;
         firstName = pFirstName;
         lastName = pLastName;
@@ -38,7 +38,7 @@ public class Customer implements Serializable {
     }
 
     // Getters.
-    public Integer getID() {
+    public String getID() {
         return ID;
     }
 
@@ -70,7 +70,7 @@ public class Customer implements Serializable {
         return zip;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -82,7 +82,7 @@ public class Customer implements Serializable {
     }
 
     // Setters.
-    public void setID(Integer ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
@@ -114,7 +114,7 @@ public class Customer implements Serializable {
         this.zip = zip;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -133,8 +133,6 @@ public class Customer implements Serializable {
             "Last name: " + lastName + "\n" +
             "Middle initial: " + middleInitial + "\n" +
             "Street: " + street + "\n" +
-            "City: " + city + "\n" +
-            "State: " + state + "\n" +
             "City: " + city + "\n" +
             "State: " + state + "\n" +
             "ZIP: " + zip + "\n" +

@@ -13,12 +13,13 @@ public class ObjectCreator {
      * @see Customer
      */
     public static Customer createCustomer() {
-        int pID, pZip, pPhone;
-        String pFirstName, pLastName, pMiddleInitial, 
+        int pZip;
+        String pID, pPhone, pFirstName, pLastName, pMiddleInitial, 
         pStreet, pCity, pState, pEmail;
 
         print("Input the customers ID:");
-            pID = Read.integer();
+            pID = Read.string();
+            pID.replaceAll("[^\\d.]", "");
         print("Input their first name:");
             pFirstName = Read.string();
         print("Input their last name:" );
@@ -34,7 +35,7 @@ public class ObjectCreator {
         print("Input the ZIP: ");
             pZip = Read.integer();
         print("Input their phone number: ");
-            pPhone = Read.integer();
+            pPhone = Read.string();
         print("Input their email: ");
             pEmail = Read.string();
 
@@ -47,14 +48,14 @@ public class ObjectCreator {
      * @see Account
      */
     public static Account createAccount() {
-        int pID;
         AccountType pType;
-        String pDescription;
+        String pID, pDescription;
         Double pBalance, pCreditLine, pBeginBalance;
         LocalDate pBeginBalanceTimestamp;
 
         print("Input the Account's ID:");
-            pID = Read.integer();
+            pID = Read.string();
+            pID.replaceAll("[^\\d.]", "");
         print("Input its description:");
             pDescription = Read.string();
         print("Input its balance:");
@@ -77,14 +78,13 @@ public class ObjectCreator {
      * @see Movement
      */
     public static Movement createMovement() {
-        int pID;
         LocalDate pTimestamp;
         double pAmount, pBalance;
-        String pDescription;
+        String pID, pDescription;
 
         print("Input the movements ID:");
-            pID = Read.integer();
-
+            pID = Read.string();
+            pID.replaceAll("[^\\d.]", "");
         print("Input its date:");
             pTimestamp = Read.date();
         print("Input the amount");

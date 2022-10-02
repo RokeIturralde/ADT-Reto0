@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.dao;
 
 import java.io.EOFException;
@@ -55,7 +50,7 @@ public class ModelFileImplementation implements Modelable {
 
         } else {
             try {
-                fos = new FileOutputStream(fichCustomer);
+                fos = new FileOutputStream(fichCustomer, true);
                 oos = new ObjectOutputStream(fos);
                 oos.writeObject(pCustomer);
                 oos.close();
@@ -69,16 +64,18 @@ public class ModelFileImplementation implements Modelable {
     }
 
     @Override
-    public Customer checkDataCustomer(Integer pID) {
+    public Customer checkDataCustomer(String pID) {
         Customer pCustomer = null;
-        try {
+        if (fichCustomer.exists()){
+            try {
             fis = new FileInputStream(fichCustomer);
             ois = new ObjectInputStream(fis);
             int cont = calculoFichero(fichCustomer);
+                System.out.println(cont);
             for (int i = 0; i < cont; i++) {
                 pCustomer = (Customer) ois.readObject();
                 if (pCustomer.getID() == pID) {
-                    i = cont;
+                    return pCustomer;
                 }
             }
             ois.close();
@@ -88,20 +85,14 @@ public class ModelFileImplementation implements Modelable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        }
+        pCustomer = null;
+        return pCustomer;
     }
 
     @Override
     public void checkAccount(Customer pCustomer) {
-        try{
-            fis = new FileInputStream(fichCustomer);
-            int cont = calculoFichero(fichCustomer);
-            for(int i=0; i<cont;i++){
-                
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
     }
 
     @Override
@@ -141,7 +132,7 @@ public class ModelFileImplementation implements Modelable {
         }
     }
 
-    public Account checkDataAccount(Integer accountId) {
+    public Account checkDataAccount(String accountId) {
         Customer customer = null;
         Account account = null;
         if (fichCustomer.exists()) {
