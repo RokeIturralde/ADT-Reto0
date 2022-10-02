@@ -34,6 +34,7 @@ public class ViewImplementation implements Viewable {
             pPhone = Read.integer();
         print("Input their email: ");
             pEmail = Read.string();
+        print("");
 
         return 
             new Customer(pID, pFirstName, pLastName, pMiddleInitial,
@@ -61,6 +62,7 @@ public class ViewImplementation implements Viewable {
             pBeginBalanceTimestamp = Read.date();
         print("Select the account type:");
             pType = Read.integer();
+        print("");
 
         return 
             new Account(pID, pDescription, pBalance, pCreditLine,
@@ -76,7 +78,6 @@ public class ViewImplementation implements Viewable {
 
         print("Input the movements ID:");
             pID = Read.integer();
-
         print("Input its date:");
             pTimestamp = Read.date();
         print("Input the amount");
@@ -85,13 +86,15 @@ public class ViewImplementation implements Viewable {
             pBalance = Read.real();
         print("Input the description:");
             pDescription = Read.string();
+        print("");
         
         return 
             new Movement(pID, pTimestamp, 
             pAmount, pBalance, pDescription);
     }
 
-    private static void print(Object obj) {
-        System.out.println(obj);
+    private void print(String s) {
+        System.out.println(s);
+
     }
 }

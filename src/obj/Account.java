@@ -3,7 +3,6 @@ package obj;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
 public class Account {
 
     private Integer ID;
