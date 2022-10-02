@@ -1,8 +1,9 @@
 package obj;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Movement {
+public class Movement implements Serializable {
 
     private Integer ID;
     private LocalDate timestamp;

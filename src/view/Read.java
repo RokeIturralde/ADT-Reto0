@@ -5,7 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-
+/**@author Dani
+ * 
+ */
 public class Read {
 
     private static Scanner in = 

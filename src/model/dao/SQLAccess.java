@@ -1,9 +1,7 @@
 package model.dao;
 
-import java.io.ObjectInputStream.GetField;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -25,7 +23,7 @@ public class SQLAccess {
             con = DriverManager
                 .getConnection(url, user, pass);
         } catch (SQLException sqle) {
-            // TODO: throw the exception.
+            sqle.printStackTrace();
         }
     }
 
@@ -33,7 +31,7 @@ public class SQLAccess {
         try {
             con.close();
         } catch (SQLException sqle) {
-            // TODO: handle exception.
+            sqle.printStackTrace();
         }
     }
 }

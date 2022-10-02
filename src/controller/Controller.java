@@ -4,6 +4,9 @@ import obj.*;
 import view.*;
 import model.*;
 
+/**@author Dani
+ * 
+ */
 public class Controller {
 
     private Modelable model = 
@@ -25,7 +28,7 @@ public class Controller {
             model.checkDataCustomer(c.getID())))
             print("The customer already exists in the database.");
         else {
-            model.createCustomer(c);
+            model.addCustomer(c);
             print("The customer has succesfully been stored in the DB.");
         }
     }
@@ -42,7 +45,7 @@ public class Controller {
         else
             print("The customer has the following data:\n" + c.toString());
     }
-    /**Shows all the accounts* of a Customer.
+    /**Shows all the accounts of a Customer.
      * If there are none, message.
      */
     public void viewAccountsOfCustomer() {
@@ -56,11 +59,11 @@ public class Controller {
             print("The customer has the following data:\n" + c.toString());
                 model.checkAccount(c);
             // TODO: it's suposed to be an array.
-            if (c.getCuentas().isEmpty())
+            if (c.getAccounts().isEmpty())
                 print("\nThere are no accounts associated with the customer.");
             else {
                 print("\nThese are all the accounts of this customer:");
-                for (Account p : c.getCuentas())
+                for (Account p : c.getAccounts())
                     print(p.toString());
             }
         }
@@ -83,8 +86,7 @@ public class Controller {
 
             if ((s.equals("") 
             || s.toUpperCase().charAt(0) == 'y'))
-                // TODO: store in all the places.
-                model.addMovement(m, a);            
+                model.addAccountToCustomer(c, a);
         }
     }
     /**
@@ -184,7 +186,7 @@ public class Controller {
     public void run() {
         clear();
         print(greet);
-        while (true) {
+        //while (true) {
             reset();
             print(options);
             switch (Read.integer(1, 8)) { 
@@ -205,7 +207,7 @@ public class Controller {
                 case 8: viewMovementFromAccount();
                     break;
             }
-        }
+        //}
     }
     /** Constant Strings to store the greeting
      * and the options of the program.

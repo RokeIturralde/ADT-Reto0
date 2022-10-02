@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import model.Modelable;
 import obj.Account;
 import obj.Customer;
@@ -25,20 +26,23 @@ import obj.Movement;
 public class ModelFileImplementation implements Modelable {
 
     // Yo creo que hay que meter esto en ModelImplementation (Gestion de base de datos y ficheros unida)
-    File fichAccount = new File("fichAccount.dat");
-    File fichMovement = new File("fichMovement.dat");
-    File fichCustomer = new File("fichCustomer.dat");
+    private File fichCustomer = new File("fichCustomer.dat");
+    private FileInputStream fis = null;
+    private ObjectInputStream ois = null;
+    private FileOutputStream fos = null;
+    private ObjectOutputStream oos = null;
+    private MyObjectOutputStream moos;
 
     @Override
-    public void createFileCustomer(Customer pCustomer, File fichCustomer) {
+    public void addCustomer(Customer pCustomer) {
         if (fichCustomer.exists()) {
             Customer findCustomer = checkDataCustomer(pCustomer.getID());
             try {
                 if (findCustomer != null) {
                     //Error message
                 } else {
-                    FileOutputStream fos = new FileOutputStream(fichCustomer, true);
-                    MyObjectOutputStream moos = new MyObjectOutputStream(fos);
+                    fos = new FileOutputStream(fichCustomer, true);
+                    moos = new MyObjectOutputStream(fos);
                     moos.writeObject(pCustomer);
                     moos.close();
                     fos.close();
@@ -51,8 +55,8 @@ public class ModelFileImplementation implements Modelable {
 
         } else {
             try {
-                FileOutputStream fos = new FileOutputStream(fichCustomer);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                fos = new FileOutputStream(fichCustomer);
+                oos = new ObjectOutputStream(fos);
                 oos.writeObject(pCustomer);
                 oos.close();
                 fos.close();
@@ -65,35 +69,170 @@ public class ModelFileImplementation implements Modelable {
     }
 
     @Override
-    public void checkFileAccount(Customer pCustomer) {
-        // Shows all the information of the accounts of this customer
-        for (int i = 0; i < pCustomer.getCuentas().size(); i++) {
-            pCustomer.getCuentas().get(i);
+    public Customer checkDataCustomer(Integer pID) {
+        Customer pCustomer = null;
+        try {
+            fis = new FileInputStream(fichCustomer);
+            ois = new ObjectInputStream(fis);
+            int cont = calculoFichero(fichCustomer);
+            for (int i = 0; i < cont; i++) {
+                pCustomer = (Customer) ois.readObject();
+                if (pCustomer.getID() == pID) {
+                    i = cont;
+                }
+            }
+            ois.close();
+            fis.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void checkAccount(Customer pCustomer) {
+        try{
+            fis = new FileInputStream(fichCustomer);
+            int cont = calculoFichero(fichCustomer);
+            for(int i=0; i<cont;i++){
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public Account checkFileDataAccount(String accountId, File fichAccount) {
-        Account account = null;
+    @Override
+    public void addAccountToCustomer(Customer customer, Account account) {
+        Customer pCustomer = null;
+        ArrayList<Customer> customers = new ArrayList <Customer> ();
         try {
-            FileInputStream fis = new FileInputStream(fichAccount);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            int cont = calculoFichero(fichAccount);
+            fis = new FileInputStream(fichCustomer);
+            ois = new ObjectInputStream(fis);
+            int cont = calculoFichero(fichCustomer);
             for (int i = 0; i < cont; i++) {
-                if (ois.readObject().toString().contains(accountId)) {
-                    account = (Account) ois.readObject();
+                pCustomer = (Customer) ois.readObject();
+                if (pCustomer.getID()==customer.getID()){
+                    customer.getAccounts().add(account);
                 }
+                customers.add(pCustomer);
             }
-        } catch (Exception e) {
+            ois.close();
+            fis.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        try {
+            fos = new FileOutputStream(fichCustomer);
+            oos = new ObjectOutputStream(fos);
+            for (int i = 0; i < customers.size(); i++) {
+                oos.writeObject(customers.get(i));
+            }
+            oos.close();
+            fos.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public Account checkDataAccount(Integer accountId) {
+        Customer customer = null;
+        Account account = null;
+        if (fichCustomer.exists()) {
+            try {
+                fis = new FileInputStream(fichCustomer);
+                ois = new ObjectInputStream(fis);
+                int cont = calculoFichero(fichCustomer);
+                for (int i = 0; i < cont; i++) {
+                    customer = (Customer) ois.readObject();
+                    for (int j = 0; j < customer.getAccounts().size(); j++) {
+                        if (customer.getAccounts().get(j).getID() == accountId) {
+                            account = customer.getAccounts().get(j);
+                            j = customer.getAccounts().size();
+                            i = cont;
+                        }
+                    }
+                }
+                ois.close();
+                fis.close(); 
+                
+            } catch (ClassNotFoundException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
         return account;
     }
 
-    //Calculates the lenght of the file
-    public static int calculoFichero(File fich) {
+    @Override
+    public void addMovement(Movement pMovement, Account pAccount) {
+        pAccount.addMovement(pMovement);
+        Customer pCustomer = null;
+        int cont = calculoFichero(fichCustomer);
+        ArrayList<Customer> customers = new ArrayList <Customer>();
+
+        try {
+            fis = new FileInputStream(fichCustomer);
+            ois = new ObjectInputStream(fis);
+
+            for (int j = 0; j < cont; j++) {
+                pCustomer = (Customer) ois.readObject();
+                for (int i = 0; i < pCustomer.getAccounts().size(); i++) {
+                    if (pAccount.getID() == pCustomer.getAccounts().get(i).getID()) {
+                        pAccount.addMovement(pMovement);
+                        i = pCustomer.getAccounts().size();
+                    }
+                }
+                customers.add(pCustomer);
+            }
+            ois.close();
+            fis.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        /**
+         * Rewrite the file
+         */
+        try {
+            fos = new FileOutputStream(fichCustomer);
+            oos = new ObjectOutputStream(fos);
+            for (int i = 0; i < customers.size(); i++) {
+                oos.writeObject(customers.get(i));
+            }
+            oos.close();
+            fos.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void checkMovement(Account pAccount) {
+        
+    }
+
+    /**Calculates the lenght of the file
+     */
+    public int calculoFichero(File fich) {
         int cont = 0;
         if (fich.exists()) {
-            FileInputStream fis = null;
-            ObjectInputStream ois = null;
+            fis = null;
+            ois = null;
             try {
                 fis = new FileInputStream(fich);
                 ois = new ObjectInputStream(fis);
@@ -104,32 +243,14 @@ public class ModelFileImplementation implements Modelable {
                     cont++;
                     aux = ois.readObject();
                 }
-
+                ois.close();
+                fis.close();
             } catch (EOFException e1) {
 
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
-
-            try {
-                ois.close();
-                fis.close();
-            } catch (IOException e) {
-                System.out.println("Error al cerrar los flujos");
-
-            }
         }
         return cont;
     }
-
-    @Override
-    public void addFileMovement(Movement pMovement, Account pAccount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void checkFileMovement(Account pAccount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

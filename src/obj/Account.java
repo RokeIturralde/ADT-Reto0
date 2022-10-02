@@ -1,10 +1,11 @@
 package obj;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Account {
+public class Account implements Serializable{
 
     private Integer ID;
     private String description;
@@ -119,5 +120,9 @@ public class Account {
                 DateTimeFormatter
                     .ofPattern("d/MM/yyyy")) + "\n" +
             "Account type: " + type;
+    }
+    
+    public void addMovement(Movement pMovement){
+        Movements.add(pMovement);
     }
 }
