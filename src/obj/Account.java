@@ -14,7 +14,7 @@ public class Account implements Serializable{
     private Double beginBalance;
     private LocalDate beginBalanceTimestamp;
     private AccountType type;
-    private ArrayList<Movement> Movements;
+    private ArrayList <Movement> Movements = new ArrayList <Movement> ();
 
     public ArrayList<Movement> getMovements() {
         return Movements;
@@ -37,17 +37,6 @@ public class Account implements Serializable{
         beginBalance = pBeginBalance;
         beginBalanceTimestamp = pBeginBalanceTimestamp;
         type = pType;
-    }
-
-    public Account(
-    Integer pID, String pDescription, Double pBalance, Double pCreditLine, 
-    Double pBeginBalance, LocalDate pBeginBalanceTimestamp, Integer pType) {
-        if (pType == 0)
-            // TODO: select the type from integer.
-            new Object();
-        else 
-            // do the other stuffs
-            new Object();
     }
     // Getters.
     public Integer getID() {
@@ -107,7 +96,7 @@ public class Account implements Serializable{
      */
     @Override
     public String toString() {
-        return 
+        String s = 
             "ID: " + ID + "\n" +
             "Description: " + description + "\n" +
             "Balance: " + balance + "\n" +
@@ -118,8 +107,14 @@ public class Account implements Serializable{
             "Begin balance timestamp: " +
             beginBalanceTimestamp.format(
                 DateTimeFormatter
-                    .ofPattern("d/MM/yyyy")) + "\n" +
-            "Account type: " + type;
+                    .ofPattern("d/MM/yyyy")) + "\n";
+
+        if (type.equals(AccountType.STANDARD))
+            s += "Account type: " + AccountType.STANDARD.toString();
+        else 
+            s += "Account type: " + AccountType.CREDIT.toString();
+
+        return s;
     }
     
     public void addMovement(Movement pMovement){

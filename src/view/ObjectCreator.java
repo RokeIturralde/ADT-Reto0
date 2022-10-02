@@ -3,6 +3,7 @@ package view;
 import java.time.LocalDate;
 
 import obj.Account;
+import obj.AccountType;
 import obj.Customer;
 import obj.Movement;
 
@@ -46,7 +47,8 @@ public class ObjectCreator {
      * @see Account
      */
     public static Account createAccount() {
-        int pID, pType;
+        int pID;
+        AccountType pType;
         String pDescription;
         Double pBalance, pCreditLine, pBeginBalance;
         LocalDate pBeginBalanceTimestamp;
@@ -64,7 +66,7 @@ public class ObjectCreator {
         print("Input its begin balance's timestamp:");
             pBeginBalanceTimestamp = Read.date();
         print("Select the account type:");
-            pType = Read.integer();
+            pType = (Read.integer() == 0) ? AccountType.STANDARD : AccountType.CREDIT;
 
         return 
             new Account(pID, pDescription, pBalance, pCreditLine,

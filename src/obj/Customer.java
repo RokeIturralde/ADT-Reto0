@@ -15,7 +15,7 @@ public class Customer implements Serializable {
     private Integer zip;
     private Integer phone;
     private String email;
-    private ArrayList <Account> accounts;
+    private ArrayList <Account> accounts = new ArrayList <Account> ();
 
     public Customer(Integer ppI) {
         ID = ppI;

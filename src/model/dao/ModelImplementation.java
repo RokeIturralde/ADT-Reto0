@@ -40,6 +40,7 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             stmt.setString(8, pCustomer.getState());
             stmt.setString(9, pCustomer.getStreet());
             stmt.setInt(10, pCustomer.getZip());
+            stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -133,11 +134,10 @@ public class ModelImplementation extends SQLAccess implements Modelable {
             stmt.setInt(2, a.getID());
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.out.println("La cagaste");
         } finally {
             closeConnection();
         }
-
-        customer.getAccounts().add(a);
     }
 
     @Override
