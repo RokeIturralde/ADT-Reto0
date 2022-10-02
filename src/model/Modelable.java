@@ -1,5 +1,8 @@
 package model;
 
+
+import java.io.File;
+import java.util.ArrayList;
 import obj.*;
 
 public interface Modelable {
@@ -24,7 +27,7 @@ public interface Modelable {
      * the attribute that contains an array of all the account of the
      * Customer. (null if none)
      */
-    public void checkAccount(Customer pCustomer);
+    public Account checkAccount(Customer pCustomer);
 
     /**
      * Maybe it's unnecesary, idk.
@@ -42,4 +45,17 @@ public interface Modelable {
      * in the database.
      */
     public void checkMovement(Account pAccount);
+
+    /**
+     * All the methods for the file part
+     */
+    public void createFileCustomer(Customer pCustomer, File fichCustomer);
+
+    public void checkFileAccount(Customer pCustomer);
+
+    public Account checkFileDataAccount(String accountId);
+
+    public void addFileMovement(Movement pMovement, Account pAccount);
+
+    public void checkFileMovement(Account pAccount);
 }
