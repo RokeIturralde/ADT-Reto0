@@ -20,7 +20,8 @@ public interface Modelable {
      * in the database.
      */
     /**
-     * Input a Customer, the function returns an array of all the account of the
+     * Input a Customer, the function modifies by reference
+     * the attribute that contains an array of all the account of the
      * Customer. (null if none)
      */
     public void checkAccount(Customer pCustomer);

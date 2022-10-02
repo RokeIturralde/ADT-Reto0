@@ -16,34 +16,13 @@ public class Controller {
     private Customer c = null;
     private Movement m = null;
 
-    private String greet = 
-        "Welcome to the bank data management application!";
-    private String options = 
-        "What would you like to do?\n\n" +
-        "1. Create a customer.\n" +
-        "2. View the data of a customer.\n" +
-        "3. View the accounts of a customer.\n" +
-        " -----------------------------------\n"+
-        "4. Create a new customer's account.\n" +
-        "5. Add a client to an account.\n" +
-        "6. View the data of an account\n" +
-        " -----------------------------------\n"+
-        "7. Make movements in an acount.\n" +
-        "8. View movements from an account.\n";
-
-    public void run() {
-        clear();
-        print(greet);
-        print(options + "\n");
-        int n = Read.integer(1, 8);
-        reset();
-    }
 
     /**Asks for data and creates a new Customer,
      * later storing it. If already created, gives
      * a message.
     */
     public void createACustomer() {
+        print("Enter the data of the customer you want to create.");
         c = view.createCustomer();
         if (c.equals(
             model.checkDataCustomer(c.getID())))
@@ -57,42 +36,42 @@ public class Controller {
      * asking it's ID.
      */
     public void viewDataOfCustomer() {
-        print("Please, select the ID of the customer you wish to see: ");
-        c = 
-            model.checkDataCustomer(
+        print("Please, input the ID of the customer you wish to see: ");
+        c = model.checkDataCustomer(
                 Read.integer());
 
         if (c.equals(null))
             print("There's no customer with that ID in the database.");
         else
-            print("The customer has the following data:\n\n" + c.toString());
+            print("The customer has the following data:\n" + c.toString());
     }
     /**Shows all the accounts* of a Customer.
      * If there are none, message.
      */
     public void viewAccountsOfCustomer() {
-        print("What's the ID of the customer whoose accounts you wish to see?");
-            c = 
-                model.checkDataCustomer(
-                    Read.integer());
+        print("Please, input the ID of the customer you wish to see: ");
+            c = model.checkDataCustomer(
+                Read.integer());
 
         if (c.equals(null))
             print("There's no customer with that ID.");
         else {
-            print("This is the customer:\n" + c.toString());
+            print("The customer has the following data:\n" + c.toString());
                 model.checkAccount(c);
             // TODO: it's suposed to be an array.
             if (c.getCuentas().isEmpty())
-                print("There are no accounts associated with the customer.");
-            else
+                print("\nThere are no accounts associated with the customer.");
+            else {
+                print("\nThese are all the accounts of this customer:");
                 for (Account p : c.getCuentas())
-                    print(p);
+                    print(p.toString());
+            }
         }
     }
     /**Create new account for a customer.
     */
     public void createAccountToCustomer() {
-        print("Please input the ID of the customer: ");
+        print("Please input the ID of the customer whose account you want to create: ");
             c = model.checkDataCustomer(
                 Read.integer());
         if (c.equals(null))
@@ -136,7 +115,7 @@ public class Controller {
      * after asking its ID.
      */
     public void viewDataOfAccount() {
-        print("Input the ID of the account:\n");
+        print("Input the ID of the account: ");
             a = model.checkDataAccount(Read.integer());
         if (a.equals(null))
             print("There are no accounts with this ID.");
@@ -147,7 +126,7 @@ public class Controller {
      * with an account.
      */
     public void makeMovementInAccount() {
-        print("Input the ID of the account:");
+        print("Input the ID of the account: ");
             a = model.checkDataAccount(Read.integer());
         if (a.equals(null))
             print("There are no accounts with this ID.");
@@ -161,7 +140,7 @@ public class Controller {
      * associated to it.
      */
     public void viewMovementFromAccount() {
-        print("Please input the ID of the account:");
+        print("Please input the ID of the account: ");
             a = model.checkDataAccount(Read.integer());
         if (a.equals(null))
             print("There are no accounts with this ID. Try again.");
@@ -197,4 +176,48 @@ public class Controller {
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }
+
+    public void run() {
+        clear();
+        print(greet);
+        while (true) {
+            reset();
+            print(options);
+            switch (Read.integer(1, 8)) { 
+                case 1: createACustomer();
+                    break;
+                case 2: viewDataOfCustomer();
+                    break;
+                case 3: viewAccountsOfCustomer();
+                    break;
+                case 4: createAccountToCustomer();
+                    break;
+                case 5: addClientToAnAccount();
+                    break;
+                case 6: viewDataOfAccount();
+                    break;
+                case 7: makeMovementInAccount();
+                    break;
+                case 8: viewMovementFromAccount();
+                    break;
+            }
+        }
+        
+    }
+
+    private String greet = 
+        "Welcome to the bank data management application!";
+    private String options = 
+        "What would you like to do?\n\n" +
+        "1. Create a customer.\n" +
+        "2. View the data of a customer.\n" +
+        "3. View the accounts of a customer.\n" +
+        " -----------------------------------\n"+
+        "4. Create a new customer's account.\n" +
+        "5. Add a client to an account.\n" +
+        "6. View the data of an account\n" +
+        " -----------------------------------\n" +
+        "7. Make movements in an acount.\n" +
+        "8. View movements from an account.\n\n" +
+        "Option: ";
 }

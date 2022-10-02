@@ -34,6 +34,7 @@ public class Read {
     }
     /**@param a low range, included,
      * @param b low range, included.
+     * The values will be swapped if incorrect
      */
     public static int integer(int a, int b) {
         if (b < a) {
