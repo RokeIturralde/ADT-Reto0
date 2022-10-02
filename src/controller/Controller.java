@@ -3,7 +3,6 @@ package controller;
 import obj.*;
 import view.*;
 import model.*;
-import model.dao.*;
 
 public class Controller {
 
@@ -80,8 +79,12 @@ public class Controller {
             print(
                 "The account will be associated with the following customer:\n\n" + 
                 c.toString() + "\n\n Are you sure? [Y/n]");
-            //if (Read.string().equals("") || Read.string().equalsIgnoreCase("y"))
+                    String s = Read.string();
+
+            if ((s.equals("") 
+            || s.toUpperCase().charAt(0) == 'y'))
                 // TODO: store in all the places.
+                model.addMovement(m, a);            
         }
     }
     /**
@@ -102,11 +105,11 @@ public class Controller {
                 "Data of the Account:\n" + a.toString() + "\n\n" +
                 "Are you sure about linking them? [Y/n]");
                     String s = Read.string();
-                /*
+                
                 if (s.equals("") 
                 || s.toUpperCase().charAt(0) == 'y')
-                    // TODO: do the stuff
-                */
+                    model.addMovement(m, a);  
+                
             }
     }
     /**Prints at the screen data from an account
@@ -153,13 +156,6 @@ public class Controller {
                     print(p.toString() + "\n");
         }
     }
-    /**Stoopid function to male prettier the prints.
-     * That's all it does really, nothing more.
-     * @param obj to be printed, with a new line.
-    */
-    private void print(Object obj) {
-        System.out.println(obj);
-    }
     /**Auxiliar method to set the values of the attributes
      * to null, just in case to avoid errors. This way it's
      * not necessary to define them in the methods. Simpler.
@@ -169,12 +165,22 @@ public class Controller {
         a = null;
         m = null;
     }
-
+    /**Auxilair void to clear the screen and make it pretty.
+     */
     private void clear() {
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }
-
+     /**Stoopid function to male prettier the prints.
+     * That's all it does really, nothing more.
+     * @param obj to be printed, with a new line.
+    */
+    private void print(Object obj) {
+        System.out.println(obj);
+    }
+    /**Main method of the class.
+     * Calls every other private function.
+     */
     public void run() {
         clear();
         print(greet);
@@ -200,12 +206,13 @@ public class Controller {
                     break;
             }
         }
-
     }
-
-    private String greet = 
+    /** Constant Strings to store the greeting
+     * and the options of the program.
+     */
+    private final String greet = 
         "Welcome to the bank data management application!";
-    private String options = 
+    private final String options = 
         "What would you like to do?\n\n" +
         "1. Create a customer.\n" +
         "2. View the data of a customer.\n" +

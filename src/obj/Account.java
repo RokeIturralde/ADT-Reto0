@@ -1,6 +1,7 @@
 package obj;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Account {
@@ -99,5 +100,24 @@ public class Account {
 
     public void setType(AccountType pType) {
         type = pType;
+    }
+    /**This method DOES NOT return the accounts.
+     * They have to be printed separately.
+     */
+    @Override
+    public String toString() {
+        return 
+            "ID: " + ID + "\n" +
+            "Description: " + description + "\n" +
+            "Balance: " + balance + "\n" +
+            "Credit line: " + creditLine + "\n" +
+            "Begin balance: " + beginBalance + "\n" +
+            "Credit line: " + creditLine + "\n" +
+            "Begin balance: " + beginBalance + "\n" +
+            "Begin balance timestamp: " +
+            beginBalanceTimestamp.format(
+                DateTimeFormatter
+                    .ofPattern("d/MM/yyyy")) + "\n" +
+            "Account type: " + type;
     }
 }

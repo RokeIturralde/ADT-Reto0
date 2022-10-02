@@ -32,15 +32,22 @@ public class Read {
         }
         return i;
     }
-    /**@param a range down, included
-     * @param b range up, included.
+    /**@param a low range, included,
+     * @param b up range, included.
+     * The values will be swapped if incorrect
      */
     public static int integer(int a, int b) {
-        int ans = integer();
-        if (!(a <= ans && ans <= b)) 
+        if (b < a) {
+            b += a;
+            a = b - a;
+            b -= a;
+        }
+        int i = integer();
+        if (!(a <= i && i <= b)) {
+            print("Please, use a value between " + a + " and " + b + ".");
             return integer(a, b);
-        return ans;
-            
+        }
+        return i;
     }
 
     public static double real() {

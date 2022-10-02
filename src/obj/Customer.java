@@ -14,7 +14,7 @@ public class Customer {
     private Integer zip;
     private Integer phone;
     private String email;
-    private ArrayList<Account> cuentas;
+    private ArrayList <Account> cuentas;
 
     public ArrayList<Account> getCuentas() {
         return cuentas;
@@ -124,6 +124,23 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "ID: " + ID + "\n" +
+            "First name: " + firstName + "\n" +
+            "Last name: " + lastName + "\n" +
+            "Middle initial: " + middleInitial + "\n" +
+            "Street: " + street + "\n" +
+            "City: " + city + "\n" +
+            "State: " + state + "\n" +
+            "City: " + city + "\n" +
+            "State: " + state + "\n" +
+            "ZIP: " + zip + "\n" +
+            "Phone: " + phone + "\n" +
+            "Email: " + email;
     }
 
 }
