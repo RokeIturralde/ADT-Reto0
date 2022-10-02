@@ -43,12 +43,13 @@ public class ModelImplementation extends SQLAccess implements Modelable {
     @Override
     public Customer checkDataCustomer(Integer pID) {
         ResultSet rs = null;
-        Customer pCustomer = null;
+        Customer pCustomer = new Customer(pID);
 
         try {
             openConnection();
             stmt = con.prepareStatement(checkDataCustomer);
             stmt.setInt(1, pID);
+            rs = stmt.executeQuery();
             if (rs.next()) {
                 pCustomer.setID(rs.getInt("id"));
                 pCustomer.setCity(rs.getString("city"));
